@@ -51,7 +51,7 @@ const flowConfirm = addKeyword(EVENTS.ACTION).addAction(async (_, { flowDynamic 
 
     setTimeout(async () => {
         const apiData = await callCalendarAPI();
-        await flowDynamic(`Aquí tienes la información que prometí: ${apiData}`);
+        await flowDynamic(`Esta es la información sobre tu reunión ${apiData}`);
     }, WAIT_TIME);
 });
 
