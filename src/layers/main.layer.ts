@@ -22,7 +22,7 @@ export default async (ctx: BotContext, { state, gotoFlow, extensions }: BotMetho
     const history = getHistoryParse(state)
     const prompt = PROMPT_DISCRIMINATOR.replace('{HISTORY}', history)
 
-    const url = 'https://primary-production-1a67.up.railway.app/webhook/abc11b34-9ca3-41f8-888-4ff45908d2ec';
+    const url = 'https://primary-production-d4db.up.railway.app/webhook/abc11b34-9ca3-41f8-888-4ff45908d2ec';
 
 const data = {
   phone: ctx.from,
