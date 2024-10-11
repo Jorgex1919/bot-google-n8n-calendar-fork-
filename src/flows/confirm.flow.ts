@@ -39,7 +39,7 @@ const flowConfirm = addKeyword(EVENTS.ACTION).addAction(async (_, { flowDynamic 
         await appToCalendar(dateObject)
 
         clearHistory(state)
-        await flowDynamic('Listo! agendado Buen dia')
+        await flowDynamic('Listo! agendado. Si tienes alguna duda o quieres cambiar la fecha y hora de la cita, contáctanos al siguiente número de teléfono: +34 652 83 70 41. ¡Muchas gracias por agendar una cita! ¡Nos vemos pronto!')
     })
 
 export { flowConfirm }
