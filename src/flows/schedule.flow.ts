@@ -75,6 +75,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
 }).addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
 
     if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('sí')) return gotoFlow(flowConfirm)
 
     await flowDynamic('¿Alguna otra fecha y hora?')
     await state.update({ desiredDate: null })
