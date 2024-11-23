@@ -56,10 +56,29 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
     const isDateAvailable = listParse.every(({ fromDate, toDate }) => !isWithinInterval(desiredDate, { start: fromDate, end: toDate }));
 
     if (!isDateAvailable) {
-        const m = 'Lo siento, esa hora ya está reservada. ¿Alguna otra fecha y hora?';
+        const MINUTES_INCREMENT = 15;
+        const dateTwo = addMinutes(desiredDate, MINUTES_INCREMENT);
+        const isDateAvailable = listParse.every(({ fromDate, toDate }) =>
+            !isWithinInterval(desiredDate, { start: fromDate, end: toDate })
+        );
+        
+        if (dateTwo) {
+            const formattedDateFrom = format(dateTwo, 'hh:mm a');
+            const formattedDateTo = format(addMinutes(dateTwo, +DURATION_MEET), 'hh:mm a');
+            const m = `Lo siento, la hora seleccionada no está disponible. ¿Te parece bien agendar de ${formattedDateFrom} a ${formattedDateTo} el día ${format(desiredDate, 'dd/MM/yyyy')}? *si*`;
+            
+            await handleHistory({ content: m, role: 'assistant' }, state);
+            await state.update({ desiredDate });
+        
+            const chunks = m.split(/(?<!\d)\.\s+/g);
+            for (const chunk of chunks) {
+                await flowDynamic([{ body: chunk.trim(), delay: generateTimer(150, 250) }]);
+            }
+            
         await flowDynamic(m);
         await handleHistory({ content: m, role: 'assistant' }, state);
         return endFlow()
+        }
     }
 
     const formattedDateFrom = format(desiredDate, 'hh:mm a');
