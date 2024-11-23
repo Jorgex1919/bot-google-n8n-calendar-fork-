@@ -58,15 +58,13 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
     if (!isDateAvailable) {
         const MINUTES_INCREMENT = 15;
         const dateTwo = addMinutes(desiredDate, MINUTES_INCREMENT);
-        const isDateAvailable = listParse.every(({ fromDate, toDate }) =>
+        const isDateAvailable2 = listParse.every(({ fromDate, toDate }) =>
             !isWithinInterval(desiredDate, { start: fromDate, end: toDate })
         );
         
-        if (dateTwo) {
-            const formattedDateFrom = format(dateTwo, 'hh:mm a');
-            const formattedDateTo = format(addMinutes(dateTwo, +DURATION_MEET), 'hh:mm a');
-            const m = `Lo siento, la hora seleccionada no está disponible. ¿Te parece bien agendar de ${formattedDateFrom} a ${formattedDateTo} el día ${format(desiredDate, 'dd/MM/yyyy')}? *si*`;
-            
+        if (!isDateAvailable2) {
+            const m = 'Lo siento, esa hora ya está reservada. ¿Alguna otra fecha y hora?';
+
             await handleHistory({ content: m, role: 'assistant' }, state);
             await state.update({ desiredDate });
         
@@ -74,10 +72,16 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
             for (const chunk of chunks) {
                 await flowDynamic([{ body: chunk.trim(), delay: generateTimer(150, 250) }]);
             }
-            
         await flowDynamic(m);
         await handleHistory({ content: m, role: 'assistant' }, state);
         return endFlow()
+        } else{
+            const formattedDateFrom = format(dateTwo, 'hh:mm a');
+            const formattedDateTo = format(addMinutes(dateTwo, +DURATION_MEET), 'hh:mm a');
+            const m2 = `Lo siento, la hora seleccionada no está disponible. ¿Te parece bien agendar de ${formattedDateFrom} a ${formattedDateTo} el día ${format(desiredDate, 'dd/MM/yyyy')}? *si*`;    
+            await flowDynamic(m2);
+            await handleHistory({ content: m2, role: 'assistant' }, state);
+            return endFlow();
         }
     }
 
