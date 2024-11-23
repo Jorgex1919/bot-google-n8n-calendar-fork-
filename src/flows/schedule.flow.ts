@@ -58,11 +58,11 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
     if (!isDateAvailable) {
         const MINUTES_INCREMENT = 15;
         const dateTwo = addMinutes(desiredDate, MINUTES_INCREMENT);
-        const isDateAvailable2 = listParse.every(({ fromDate, toDate }) =>
-            !isWithinInterval(desiredDate, { start: fromDate, end: toDate })
+        const isDateAvailable2 = listParse.every(({ fromDate, toDate }) => !isWithinInterval(dateTwo, { start: fromDate, end: toDate })
         );
         
         if (!isDateAvailable2) {
+            console.log('Fecha no disponible, revisando incrementos...');
             const m = 'Lo siento, esa hora ya está reservada. ¿Alguna otra fecha y hora?';
 
             await handleHistory({ content: m, role: 'assistant' }, state);
