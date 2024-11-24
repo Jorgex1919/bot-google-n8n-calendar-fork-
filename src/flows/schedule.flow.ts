@@ -54,6 +54,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
     const desiredDate = parse(date, 'yyyy/MM/dd HH:mm:ss', new Date());
 
     const isDateAvailable = listParse.every(({ fromDate, toDate }) => !isWithinInterval(desiredDate, { start: fromDate, end: toDate }));
+    console.log(isDateAvailable);
 
     if (!isDateAvailable) {
         const MINUTES_INCREMENT = 15;
@@ -61,6 +62,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
         const isDateAvailable2 = listParse.every(({ fromDate, toDate }) => !isWithinInterval(dateTwo, { start: fromDate, end: toDate })
         );
         console.log(dateTwo);
+        console.log(isDateAvailable2);
         
         if (!isDateAvailable2) {
             console.log('Fecha no disponible, revisando incrementos...');
@@ -70,9 +72,9 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
             for (const chunk of chunks) {
                 await flowDynamic([{ body: chunk.trim(), delay: generateTimer(150, 250) }]);
             }
-        await flowDynamic(m);
-        await handleHistory({ content: m, role: 'assistant' }, state);
-        return endFlow()
+            await flowDynamic(m);
+            await handleHistory({ content: m, role: 'assistant' }, state);
+            return endFlow()
         } else{
             const formattedDateFrom = format(dateTwo, 'hh:mm a');
             const formattedDateTo = format(addMinutes(dateTwo, +DURATION_MEET), 'hh:mm a');
@@ -93,6 +95,9 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
     for (const chunk of chunks) {
         await flowDynamic([{ body: chunk.trim(), delay: generateTimer(150, 250) }]);
     }
+    await flowDynamic(message);
+            await handleHistory({ content: message, role: 'assistant' }, state);
+            return endFlow();
 }).addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
 
     if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirm)
