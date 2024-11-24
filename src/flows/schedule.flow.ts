@@ -76,7 +76,14 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
             const m2 = `Lo siento, la hora seleccionada no está disponible. ¿Te parece bien agendar de ${formattedDateFrom} a ${formattedDateTo} el día ${format(desiredDate, 'dd/MM/yyyy')}? *si*`;    
             await flowDynamic(m2);
             await handleHistory({ content: m2, role: 'assistant' }, state);
-            return endFlow();
+            return flowSchedule.addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
+
+                if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirm)
+                if (body.toLowerCase().includes('sí')) return gotoFlow(flowConfirm)
+            
+                await flowDynamic('¿Alguna otra fecha y hora?')
+                await state.update({ desiredDate: null })
+            })
         }
     }
 
