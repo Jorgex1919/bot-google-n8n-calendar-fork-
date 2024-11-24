@@ -54,13 +54,13 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
     const desiredDate = parse(date, 'yyyy/MM/dd HH:mm:ss', new Date());
 
     const isDateAvailable = listParse.every(({ fromDate, toDate }) => !isWithinInterval(desiredDate, { start: fromDate, end: toDate }));
+    console.log(desiredDate);
     console.log(isDateAvailable);
 
     if (!isDateAvailable) {
         const MINUTES_INCREMENT = 15;
         const dateTwo = addMinutes(desiredDate, MINUTES_INCREMENT);
-        const isDateAvailable2 = listParse.every(({ fromDate, toDate }) => !isWithinInterval(dateTwo, { start: fromDate, end: toDate })
-        );
+        const isDateAvailable2 = listParse.every(({ fromDate, toDate }) => !isWithinInterval(dateTwo, { start: fromDate, end: toDate }));
         console.log(dateTwo);
         console.log(isDateAvailable2);
         
