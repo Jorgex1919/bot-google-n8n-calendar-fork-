@@ -67,11 +67,6 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
         if (!isDateAvailable2) {
             console.log('Fecha no disponible, revisando incrementos...');
             const m = 'Lo siento, esa hora ya está reservada. ¿Alguna otra fecha y hora?';
-        
-            const chunks = m.split(/(?<!\d)\.\s+/g);
-            for (const chunk of chunks) {
-                await flowDynamic([{ body: chunk.trim(), delay: generateTimer(150, 250) }]);
-            }
             await flowDynamic(m);
             await handleHistory({ content: m, role: 'assistant' }, state);
             return endFlow()
@@ -95,7 +90,6 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
     for (const chunk of chunks) {
         await flowDynamic([{ body: chunk.trim(), delay: generateTimer(150, 250) }]);
     }
-    await flowDynamic(message);
             await handleHistory({ content: message, role: 'assistant' }, state);
             return endFlow();
 }).addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
