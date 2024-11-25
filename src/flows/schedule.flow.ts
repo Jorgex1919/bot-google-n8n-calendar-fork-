@@ -98,7 +98,6 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
         await flowDynamic([{ body: chunk.trim(), delay: generateTimer(150, 250) }]);
     }
             await handleHistory({ content: message, role: 'assistant' }, state);
-            return endFlow();
 }).addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
 
     if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirm)
