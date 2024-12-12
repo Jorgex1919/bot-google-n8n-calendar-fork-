@@ -6,6 +6,7 @@ import { flowSchedule } from "./schedule.flow";
 import { flowConfirm } from "./confirm.flow";
 import { voiceFlow } from "./voice.flow";
 import { registerFlow } from "./register.flow";
+import { flowConfirmDos } from "./confirmdos.flow";
 
 
 export default createFlow([
@@ -14,5 +15,6 @@ export default createFlow([
     flowSchedule,
     flowConfirm,
     voiceFlow,
-    registerFlow
+    registerFlow,
+    flowConfirmDos
 ])
