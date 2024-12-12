@@ -20,7 +20,7 @@ const flowConfirmDos = addKeyword(EVENTS.ACTION).addAction(async (_, { flowDynam
 
     }
     await state.update({ name: ctx.body })
-    await flowDynamic(`Ultima pregunta ¿Cual es tu email?`)
+    await flowDynamic(`Última pregunta ¿Cual es tu email?`)
 })
     .addAction({ capture: true }, async (ctx, { state, flowDynamic, fallBack }) => {
 
