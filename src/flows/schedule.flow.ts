@@ -71,9 +71,11 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
             await flowDynamic(m);
             await handleHistory({ content: m, role: 'assistant' }, state);
             return endFlow()
-        } else{            
+        } else{      
+            return      
             const formattedDateFrom = format(dateTwo, 'hh:mm a');
             const formattedDateTo = format(addMinutes(dateTwo, +DURATION_MEET), 'hh:mm a');
+            console.log('Estamos en m2');
             const m2 = `Lo siento, la hora seleccionada no está disponible. ¿Te parece bien agendar de ${formattedDateFrom} a ${formattedDateTo} el día ${format(desiredDate, 'dd/MM/yyyy')}? *si*`;    
             await flowDynamic(m2);
             await handleHistory({ content: m2, role: 'assistant' }, state);
