@@ -73,6 +73,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
             await handleHistory({ content: m, role: 'assistant' }, state);
             return endFlow()
         } else{      
+            console.log("Vamos a flowsch 2");
             return gotoFlow(flowSchedule2)     
             const formattedDateFrom = format(dateTwo, 'hh:mm a');
             const formattedDateTo = format(addMinutes(dateTwo, +DURATION_MEET), 'hh:mm a');
