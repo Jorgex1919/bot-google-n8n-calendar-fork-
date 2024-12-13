@@ -32,7 +32,7 @@ const generatePromptFilter = (history: string) => {
     return mainPrompt;
 }
 
-const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions, state, flowDynamic, endFlow }) => {
+const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, extensions, state, flowDynamic, endFlow }) => {
     await flowDynamic('Dame un momento para consultar la agenda...');
     const ai = extensions.ai as AIClass;
     const history = getHistoryParse(state);
@@ -72,6 +72,8 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
             await handleHistory({ content: m, role: 'assistant' }, state);
             return endFlow()
         } else{
+            await state.update({ desiredDate })
+            return gotoFlow (flowConfirmDos)
             const formattedDateFrom = format(dateTwo, 'hh:mm a');
             const formattedDateTo = format(addMinutes(dateTwo, +DURATION_MEET), 'hh:mm a');
             const m2 = `Lo siento, la hora seleccionada no está disponible. ¿Te parece bien agendar de ${formattedDateFrom} a ${formattedDateTo} el día ${format(desiredDate, 'dd/MM/yyyy')}? *si*`;    
