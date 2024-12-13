@@ -71,9 +71,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
             await flowDynamic(m);
             await handleHistory({ content: m, role: 'assistant' }, state);
             return endFlow()
-        } else{
-            await state.update({ desiredDate })
-            return gotoFlow (flowConfirmDos)
+        } else{            
             const formattedDateFrom = format(dateTwo, 'hh:mm a');
             const formattedDateTo = format(addMinutes(dateTwo, +DURATION_MEET), 'hh:mm a');
             const m2 = `Lo siento, la hora seleccionada no está disponible. ¿Te parece bien agendar de ${formattedDateFrom} a ${formattedDateTo} el día ${format(desiredDate, 'dd/MM/yyyy')}? *si*`;    
@@ -91,7 +89,16 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
                 await flowDynamic('¿Alguna otra fecha y hora?')
                 await state.update({ desiredDate: null })
             })
-        }
+        }flowSchedule.addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
+
+            console.log('Redirigiendo a flowConfirmDos...');
+            if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirmDos)
+            if (body.toLowerCase().includes('sí')) return gotoFlow(flowConfirmDos)
+            if (body.toLowerCase().includes('ok')) return gotoFlow(flowConfirmDos)
+        
+            await flowDynamic('¿Alguna otra fecha y hora?')
+            await state.update({ desiredDate: null })
+        })
     }
 
     const formattedDateFrom = format(desiredDate, 'hh:mm a');
