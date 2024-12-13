@@ -79,7 +79,9 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
             await handleHistory({ content: m2, role: 'assistant' }, state);
             await state.update({ desiredDate })
             
-            flowSchedule.addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
+            const flowConfirmDos = addKeyword(EVENTS.ACTION).addAction(async (_, { flowDynamic, state }) => {
+                await flowDynamic(m2)
+            }).addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
 
                 console.log('Redirigiendo a flowConfirmDos...');
                 if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirmDos)
@@ -89,16 +91,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
                 await flowDynamic('¿Alguna otra fecha y hora?')
                 await state.update({ desiredDate: null })
             })
-        }flowSchedule.addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
-
-            console.log('Redirigiendo a flowConfirmDos...');
-            if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirmDos)
-            if (body.toLowerCase().includes('sí')) return gotoFlow(flowConfirmDos)
-            if (body.toLowerCase().includes('ok')) return gotoFlow(flowConfirmDos)
-        
-            await flowDynamic('¿Alguna otra fecha y hora?')
-            await state.update({ desiredDate: null })
-        })
+        }
     }
 
     const formattedDateFrom = format(desiredDate, 'hh:mm a');
