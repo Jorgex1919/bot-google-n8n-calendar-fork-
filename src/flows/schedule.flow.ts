@@ -82,6 +82,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
                 console.log('Redirigiendo a flowConfirmDos...');
                 if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirmDos)
                 if (body.toLowerCase().includes('sí')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('ok')) return gotoFlow(flowConfirmDos)
             
                 await flowDynamic('¿Alguna otra fecha y hora?')
                 await state.update({ desiredDate: null })
@@ -104,6 +105,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { extensions,
 
     if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirm)
     if (body.toLowerCase().includes('sí')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('ok')) return gotoFlow(flowConfirm)
 
     await flowDynamic('¿Alguna otra fecha y hora?')
     await state.update({ desiredDate: null })
