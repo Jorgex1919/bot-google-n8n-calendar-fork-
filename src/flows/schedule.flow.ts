@@ -80,7 +80,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
             await state.update({ desiredDate })
 
 
-            const Confirm2 = addKeyword().addAction(async (_, { flowDynamic, state }) => {
+            const Confirm2 = addKeyword(EVENTS.ACTION).addAction(async (_, { flowDynamic, state }) => {
                 console.log('Estamos en flowConfirmDos');
                 await flowDynamic(m2)
             }).addAction({ capture: true }, async ({ body }, { gotoFlow, flowDynamic, state }) => {
