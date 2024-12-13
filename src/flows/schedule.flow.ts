@@ -7,6 +7,7 @@ import { getFullCurrentDate } from "src/utils/currentDate";
 import { flowConfirm } from "./confirm.flow";
 import { addMinutes, isWithinInterval, format, parse } from "date-fns";
 import { flowConfirmDos } from "./confirmdos.flow";
+import { flowSchedule2 } from "./scheduledos.flow";
 
 const DURATION_MEET = process.env.DURATION_MEET ?? 45
 
@@ -72,7 +73,7 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
             await handleHistory({ content: m, role: 'assistant' }, state);
             return endFlow()
         } else{      
-            return      
+            return gotoFlow(flowSchedule2)     
             const formattedDateFrom = format(dateTwo, 'hh:mm a');
             const formattedDateTo = format(addMinutes(dateTwo, +DURATION_MEET), 'hh:mm a');
             console.log('Estamos en m2');
