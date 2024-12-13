@@ -12,7 +12,10 @@ const DURATION_MEET = process.env.DURATION_MEET ?? 45
 
 console.log("Llegamos a flowsch 2");
 
-const PROMPT_FILTER_DATE = `
+
+const flowSchedule2 = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, extensions, state, flowDynamic, endFlow }) => {
+    console.log("Dentro de flowsch 2");
+    const PROMPT_FILTER_DATE = `
 ### Contexto
 Eres un asistente de inteligencia artificial. Tu propósito es determinar la fecha y hora que el cliente quiere, en el formato yyyy/MM/dd HH:mm:ss.
 
@@ -33,9 +36,6 @@ const generatePromptFilter = (history: string) => {
 
     return mainPrompt;
 }
-
-const flowSchedule2 = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, extensions, state, flowDynamic, endFlow }) => {
-    console.log("Dentro de flowsch 2");
     const ai = extensions.ai as AIClass;
     const history = getHistoryParse(state);
     const list = await getCurrentCalendar()
