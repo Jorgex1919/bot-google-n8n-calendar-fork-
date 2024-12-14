@@ -92,6 +92,15 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
                 console.log('Redirigiendo a flowConfirmDos...');
                 if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirmDos)
                 if (body.toLowerCase().includes('sí')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('okey')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('perfecto')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('genial')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('va bien')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('de lujo')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('me va genial')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('me va perfecto')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('me parece genial')) return gotoFlow(flowConfirmDos)
+                if (body.toLowerCase().includes('va perfecto')) return gotoFlow(flowConfirmDos)
                 if (body.toLowerCase().includes('ok')) return gotoFlow(flowConfirmDos)
             
                 await flowDynamic('¿Alguna otra fecha y hora?')
@@ -117,6 +126,15 @@ const flowSchedule = addKeyword(EVENTS.ACTION).addAction(async (_, { gotoFlow, e
 
     if (body.toLowerCase().includes('si')) return gotoFlow(flowConfirm)
     if (body.toLowerCase().includes('sí')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('okey')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('perfecto')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('genial')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('va bien')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('de lujo')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('me va genial')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('me va perfecto')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('me parece genial')) return gotoFlow(flowConfirm)
+    if (body.toLowerCase().includes('va perfecto')) return gotoFlow(flowConfirm)
     if (body.toLowerCase().includes('ok')) return gotoFlow(flowConfirm)
 
     await flowDynamic('¿Alguna otra fecha y hora?')
